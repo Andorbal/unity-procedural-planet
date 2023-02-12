@@ -89,9 +89,12 @@ public class Planet : MonoBehaviour
 
   void GenerateMesh()
   {
-    foreach (var face in terrainFaces)
+    for (int i = 0; i < 6; i += 1)
     {
-      face.ConstructMesh();
+      if (meshFilters[i].gameObject.activeSelf)
+      {
+        terrainFaces[i].ConstructMesh();
+      }
     }
 
     colorGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
@@ -100,5 +103,13 @@ public class Planet : MonoBehaviour
   void GenerateColors()
   {
     colorGenerator.UpdateColors();
+
+    for (int i = 0; i < 6; i += 1)
+    {
+      if (meshFilters[i].gameObject.activeSelf)
+      {
+        terrainFaces[i].UpdateUVs(colorGenerator);
+      }
+    }
   }
 }
